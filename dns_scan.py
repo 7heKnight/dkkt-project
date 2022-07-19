@@ -20,7 +20,7 @@ banner = r'''==========================================================
 project built to make for demonstration.
 # Disclaimer: This tools make for education purpose, any 
 problem will be your own risk.
-# !! This tool isn't applied OPSEC, careful to use !!.
+# !! This tool isn't applied OPSEC method, careful to use !!.
 
 ----------------------------------------------------------
 '''
