@@ -2,6 +2,7 @@ import datetime
 import os
 import re
 
+
 def get_name() -> str:
     now = datetime.datetime.now().strftime("%d%m%Y-%H%M%S")
     return f'dkkt-report_{now}'
@@ -12,11 +13,6 @@ def get_html_report(lu, lp, le, oo):
         print('[!] Missing html form to export.')
         return ''
     final_output = open('form/form.html', encoding='utf8').read()
-    # This will be removed
-    file = open('1.txt', 'r')
-    output_others = f'{oo}\n' + file.read()
-    file.close()
-    # Remove
 
     # Replace Urls
     output_urls = '- ' + '<br>- '.join(u for u in lu)
@@ -31,7 +27,7 @@ def get_html_report(lu, lp, le, oo):
     # print(output_emails)
 
     # Replace Others
-    output_others = output_others.replace('\n\n', '- ')
+    output_others = oo.replace('\n\n', '- ')
     output_others = re.sub(r'#+.+?#+\n', '', output_others, re.S)
     output_others = re.sub(r'\n', '<br>- ', output_others, re.S)
     output_others = output_others.replace('- -', '-')
@@ -52,11 +48,6 @@ def get_txt_report(lu, lp, le, oo):
         print('[!] Missing html form to export.')
         return ''
     final_output = open('form/form.txt', encoding='utf8').read()
-    # This will be removed
-    file = open('1.txt', 'r')
-    output_others = f'{oo}\n' + file.read()
-    file.close()
-    # Remove
 
     # Replace Urls
     output_urls = '- ' + '\n- '.join(u for u in lu)
@@ -71,7 +62,7 @@ def get_txt_report(lu, lp, le, oo):
     # print(output_emails)
 
     # Replace Others
-    output_others = output_others.replace('\n\n', '- ')
+    output_others = oo.replace('\n\n', '- ')
     output_others = re.sub(r'#+.+?#+\n', '', output_others, re.S)
     output_others = re.sub(r'\n', '\n- ', output_others, re.S)
     output_others = output_others.replace('- -', '-')
