@@ -8,7 +8,7 @@ What will this tool do?
 ---
 Active Scanning to on that web site to get all resource like (links, phones, emails)
 
-Using [Cloud Enum](https://github.com/initstring/cloud_enum)(optimized) to brute force other resource (thread = 10)
+Using [Cloud Enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
 
 Export to html or txt
 
