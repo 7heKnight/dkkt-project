@@ -41,7 +41,6 @@ def valid_link(core_url: str, crawled_link: str) -> str:
     """
     final_url = crawled_link
     base_url = urlparse(core_url)
-    # regex = re.compile(r'https?://\w+/?\w*', re.IGNORECASE)
     regex = re.compile(
         r'^(?:http|ftp)s?://'
         r'(?:(?:[A-Z\d](?:[A-Z\d-]{0,61}[A-Z\d])?\.)+(?:[A-Z]{2,6}\.?|[A-Z\d-]{2,}\.?)|'
@@ -67,7 +66,6 @@ def get_all_link(link: str):
     response = session.get(link).text
     src_link = re.findall(r'src="(.+?)"', response)
     href_link = re.findall(r'href="(.+?)"', response)
-    href_link.append('https://github.com/dkktdev')
     list_crawled_link = src_link + href_link
     print('\n[*] Web Resources:')
     for src in list_crawled_link:
