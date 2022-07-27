@@ -1,5 +1,6 @@
 from urllib.parse import urlparse
 from sys import argv, exit
+from tools import export
 import requests
 import os
 import re
@@ -25,12 +26,10 @@ problem will be your own risk.
 ----------------------------------------------------------
 '''
 
-# [0]: List Cloud Resource Links
-# [1]: List Phone
-# [2]: List Emails
 list_urls = []
 list_phones = []
 list_emails = []
+others_output = ''
 
 
 def valid_link(core_url: str, crawled_link: str) -> str:
@@ -112,71 +111,83 @@ def get_contact(list_links: list):
                         list_emails.append(email)
                 if not list_phone_number and not list_email:
                     print('  [-] Not found any email or phone on this file')
-        except:
+        except ValueError:
             pass
+
 
 def option_panel():
     """
     Print option table for user to select option, after executed
     :return:
     """
+    global others_output
     option_table = '''
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
-Option 3: Extract data (PDF/HTML/XML)
+Option 3: Extract data (HTML/TXT)
 Option 4: Exit
 '''
     from time import sleep
     from os import system
 
     try:
-        print(option_table)
         try:
-            option = int(input('>> Enter your option: '))
-        except ValueError:
-            option = int(input('>> Enter your option: '))
-        if option == 1:
-            url = input('[*] Enter Url: ')
-            get_all_link(url)
-            get_contact(list_urls)
-            return option_panel()
-        elif option == 2:
+            print(option_table)
+            try:
+                option = int(input('>> Enter your option: '))
+            except ValueError:
+                option = int(input('>> Enter your option: '))
+            # ==============================================================
+            if option == 1:
+                url = input('[*] Enter Url: ')
+                get_all_link(url)
+                get_contact(list_urls)
+                return option_panel()
+            # ==============================================================
+            elif option == 2:
+                input_keyword = input('[*] Enter keywords: ')
+                input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
+                if input_mutation == '':
+                    input_mutation = os.getcwd() + '/wordlist/fuzz.txt'
+                if not os.access(input_mutation, os.R_OK):
+                    while os.access(input_mutation, os.R_OK):
+                        input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
+                input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
+                if input_brute == '':
+                    input_brute = os.getcwd() + '/wordlist/fuzz.txt'
+                if not os.access(input_brute, os.R_OK):
+                    while os.access(input_brute, os.R_OK):
+                        input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
 
-            input_keyword = input('[*] Enter keywords: ')
+                open('1.txt', 'w')
+                os.system(
+                    f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
+                file = open('1.txt', 'r', encoding='utf8')
+                others_output = others_output + '\n' + file.read()
+                file.close()
+                os.remove('1.txt')
 
-            input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
-            if input_mutation == '':
-                input_mutation = os.getcwd() + '/wordlist/fuzz.txt'
-            if not os.access(input_mutation, os.R_OK):
-                while os.access(input_mutation, os.R_OK):
-                    input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
-
-            input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
-            if input_brute == '':
-                input_brute = os.getcwd() + '/wordlist/fuzz.txt'
-            if not os.access(input_brute, os.R_OK):
-                while os.access(input_brute, os.R_OK):
-                    input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
-
-            open('1.txt', 'w')
-            os.system(f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
-
-            return option_panel()
-        elif option == 3:
-            if not list_urls[0]:
-                print('[-] There is no data to print output')
+                return option_panel()
+            # ==============================================================
+            elif option == 3:
+                if not list_urls:
+                    print('[-] There is no data to print output')
+                    sleep(3)
+                    system('cls')
+                else:  # Print data here, input function here
+                    export.main(list_urls, list_phones, list_emails, others_output)
+                return option_panel()
+            # ==============================================================
+            elif option == 4:
+                print('-----------------------------\n[-] Exit the program!')
+                exit(0x0)
+            else:
+                print('[-] Wrong option!')
                 sleep(3)
                 system('cls')
-            else:  # Print data here, input function here
-                pass
-            return option_panel()
-        elif option == 4:
-            print('-----------------------------\n[-] Exit the program!')
-            exit(0x0)
-        else:
-            print('[-] Wrong option!')
-            sleep(3)
-            system('cls')
+                return option_panel()
+        except IOError:
+            print('[!] Error when processing\n\n')
             return option_panel()
     except KeyboardInterrupt:
         print('\n-----------------------------\n[!] Keyboard Interruption.')
