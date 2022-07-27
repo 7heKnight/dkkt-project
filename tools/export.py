@@ -2,21 +2,6 @@ import datetime
 import os
 import re
 
-# list_urls = ['https://dkktbank.blob.core.windows.net/images/logo.png',
-#              'https://dkktbank.azurewebsites.net/jquery-3.2.1.min.js',
-#              'https://dkktbank.azurewebsites.net/images/pennywise.jpg',
-#              'https://dkktbank.azurewebsites.net/header_style.css',
-#              'https://dkktbank.azurewebsites.net/navbar_style.css',
-#              'https://dkktbank.azurewebsites.net/index.php',
-#              'https://dkktbank.azurewebsites.net/news.php',
-#              'https://dkktbank.azurewebsites.net/contact.php',
-#              'https://dkktbank.azurewebsites.net/easter_egg_style.css',
-#              'https://github.com/dkktdev']
-# list_phones = ['888-968-6822', '732-367-5505', '732-367-2313', '888-966-6992', '732-666-5555']
-# list_emails = ['care@dkkt.asia', 'teamdkkt@gmail.com']
-# others_output = ''
-#
-
 def get_name() -> str:
     now = datetime.datetime.now().strftime("%d%m%Y-%H%M%S")
     return f'dkkt-report_{now}'
@@ -74,7 +59,7 @@ def get_txt_report(lu, lp, le, oo):
     # Remove
 
     # Replace Urls
-    output_urls = '- ' + '\n '.join(u for u in lu)
+    output_urls = '- ' + '\n- '.join(u for u in lu)
     # print(output_urls)
 
     # Replace Phones
@@ -124,7 +109,3 @@ def main(lu, lp, le, oo):
     write_output.write(final_output)
     print('[+] Your report successfully saved to:\n'
           f'\t{os.getcwd()}/export/{get_name() + export_type}')
-
-#
-# if __name__ == '__main__':
-#     main(list_urls, list_phones, list_emails, others_output)
