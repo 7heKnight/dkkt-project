@@ -1,4 +1,3 @@
-import subprocess
 from urllib.parse import urlparse
 from sys import argv, exit
 import requests
@@ -41,7 +40,9 @@ def valid_link(core_url: str, crawled_link: str) -> str:
     :param crawled_link:
     :return:
     """
+    final_url = crawled_link
     base_url = urlparse(core_url)
+    # regex = re.compile(r'https?://\w+/?\w*', re.IGNORECASE)
     regex = re.compile(
         r'^(?:http|ftp)s?://'
         r'(?:(?:[A-Z\d](?:[A-Z\d-]{0,61}[A-Z\d])?\.)+(?:[A-Z]{2,6}\.?|[A-Z\d-]{2,}\.?)|'
@@ -49,26 +50,13 @@ def valid_link(core_url: str, crawled_link: str) -> str:
         r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
         r'(?::\d+)?'  # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-    if re.match(regex, crawled_link) is None:
+    # print(base_url)
+    if not re.match(regex, final_url):
         if crawled_link[0] == '/':
-            base_url = f"{base_url.scheme}://{base_url.netloc}{crawled_link}"
+            final_url = f"{base_url.scheme}://{base_url.netloc}{crawled_link}"
         else:
-            base_url = f"{base_url.scheme}://{base_url.netloc}/{crawled_link}"
-    return base_url
-
-
-def valid_cloud_resource():
-    cloud_key = {}
-    if not os.path.isfile('wordlist/service.txt'):
-        print('[-] File "wordlist/service.txt" not found!')
-        exit(1)
-    read_cloud_svc = open('wordlist/service.txt', 'r').read()
-    print(read_cloud_svc)
-    cloud_svc_chk = re.findall(r'(.+?)\|', read_cloud_svc)
-    cloud_svcname_chk = re.findall(r'.+?\|(.+?)\n', read_cloud_svc)
-    for i in range(len(cloud_svc_chk)):
-        cloud_key.update({cloud_svc_chk[i]: cloud_svcname_chk[i]})
-    print(cloud_key)
+            final_url = f"{base_url.scheme}://{base_url.netloc}/{crawled_link}"
+    return final_url
 
 
 def get_all_link(link: str):
@@ -82,20 +70,18 @@ def get_all_link(link: str):
     href_link = re.findall(r'href="(.+?)"', response)
     href_link.append('https://github.com/dkktdev')
     list_crawled_link = src_link + href_link
-
     print('\n[*] Web Resources:')
     for src in list_crawled_link:
         if 'blob.core.windows.net' in src \
                 or 'file.core.windows.net' in src:
-            print(f'   [-] Web resource: {src}')
+            print(f'   [+] Web resource: {src}')
             list_urls.append(src)
         else:
-            src = valid_link(link, src)
-            print(f'   [-] Web resource: {src}')
-            list_urls.append(src)
+            tmp_link = valid_link(link, src)
+            print(f'   [+] Web resource: {tmp_link}')
+            list_urls.append(tmp_link)
     if not list_urls:
         print('   [-] Web resource not found!')
-
 
 
 def get_contact(list_links: list):
