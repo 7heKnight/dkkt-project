@@ -50,7 +50,7 @@ problem will be your own risk.
 
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
-Option 3: Extract data (PDF/HTML/XML)
+Option 3: Extract data (HTML/TXT)
 Option 4: Exit
 
 >> Enter your option: 
