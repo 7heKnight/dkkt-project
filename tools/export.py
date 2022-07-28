@@ -35,11 +35,19 @@ def get_html_report(lu, lp, le, oo):
     output_others = re.sub(r'<br>- $', '', output_others)
 
     # Replace
-    final_output = final_output.replace('ReplaceLinksHere', output_urls)
-    final_output = final_output.replace('ReplacePhonesHere', output_phones)
-    final_output = final_output.replace('ReplaceEmailsHere', output_emails)
-    final_output = final_output.replace('ReplaceOthersHere', output_others)
     final_output = final_output.replace('ReplaceTimeHere', datetime.datetime.now().strftime("%d/%m/%Y (%H:%M:%S)"))
+    if output_urls == '- ':
+        output_urls += 'None'
+    final_output = final_output.replace('ReplaceLinksHere', output_urls)
+    if output_phones == '- ':
+        output_phones += 'None'
+    final_output = final_output.replace('ReplacePhonesHere', output_phones)
+    if output_emails == '- ':
+        output_emails += 'None'
+    final_output = final_output.replace('ReplaceEmailsHere', output_emails)
+    if output_others == '- ' or output_others == '':
+        output_others += '- None'
+    final_output = final_output.replace('ReplaceOthersHere', output_others)
     return final_output
 
 
@@ -71,9 +79,17 @@ def get_txt_report(lu, lp, le, oo):
 
     # Replace
     final_output = final_output.replace('ReplaceTimeHere', datetime.datetime.now().strftime("%d/%m/%Y (%H:%M:%S)"))
+    if output_urls == '- ':
+        output_urls += 'None'
     final_output = final_output.replace('ReplaceLinksHere', output_urls)
+    if output_phones == '- ':
+        output_phones += 'None'
     final_output = final_output.replace('ReplacePhonesHere', output_phones)
+    if output_emails == '- ':
+        output_emails += 'None'
     final_output = final_output.replace('ReplaceEmailsHere', output_emails)
+    if output_others == '- ' or output_others == '':
+        output_others += '- None'
     final_output = final_output.replace('ReplaceOthersHere', output_others)
     return final_output
 
