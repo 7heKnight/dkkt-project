@@ -6,7 +6,7 @@ This Project built for azure scanning purpose.
 
 What will this tool do?
 ---
-Active Scanning to on that web site to get all resource like (links, phones, emails)
+Active scanning on that web site to get all resource like (links, phones, emails)
 
 Using [Cloud Enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
 
