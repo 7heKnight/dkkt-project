@@ -1,0 +1,45 @@
+DKKT Report
+29/07/2022 (10:23:24)
+-------------------------------------------------
+
+List Web Resource:
+- https://dkktbank.blob.core.windows.net/images/logo.png
+- https://dkktbank.azurewebsites.net/jquery-3.2.1.min.js
+- https://dkktbank.azurewebsites.net/images/pennywise.jpg
+- https://dkktbank.azurewebsites.net/header_style.css
+- https://dkktbank.azurewebsites.net/navbar_style.css
+- https://dkktbank.azurewebsites.net/index.php
+- https://dkktbank.azurewebsites.net/news.php
+- https://dkktbank.azurewebsites.net/contact.php
+- https://dkktbank.azurewebsites.net/javascript:void(0);
+- https://dkktbank.azurewebsites.net/home_style.css
+- https://github.com/dkktdev
+- https://dkktbank.azurewebsites.net/easter_egg_style.css
+
+-------------------------------------------------
+
+List Phones:
+- 012-345-6787
+- 012-345-6789
+- 012-345-6788
+- 012-345-6787
+- 012-345-6789
+
+-------------------------------------------------
+
+List Emails:
+- care@dkktteam.onmicrosoft.com
+- teamdkkt@gmail.com
+
+-------------------------------------------------
+
+Others:
+- HTTPS-Only Storage Account: http://dkktbank.blob.core.windows.net/
+- OPEN AZURE CONTAINER: https://dkktbank.blob.core.windows.net/backup/?restype=container&comp=list
+- OPEN AZURE CONTAINER: https://dkktbank.blob.core.windows.net/images/?restype=container&comp=list
+- Registered Azure Website DNS Name: dkktbank.azurewebsites.net
+
+-------------------------------------------------
+
+DKKT Team
+Address: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ Thành Phố Thủ Đức, Thành phố Hồ Chí Minh
