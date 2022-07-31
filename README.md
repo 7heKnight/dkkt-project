@@ -50,8 +50,9 @@ problem will be your own risk.
 
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
-Option 3: Extract data (HTML/TXT)
-Option 4: Exit
+Option 3: Password spraying
+Option 4: Extract data (HTML/TXT)
+Option 5: Exit
 
 >> Enter your option: 
 ```

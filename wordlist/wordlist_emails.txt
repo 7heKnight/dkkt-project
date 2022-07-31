@@ -1,4 +1,5 @@
 contributor@dkktteam.onmicrosoft.com
-care@dkktteam.onmicrosoft.com
+customer.care@dkktteam.onmicrosoft.com
+developer@dkktteam.onmicrosoft.com
 teamdkkt@gmail.com
 developer@dkkt.asia
