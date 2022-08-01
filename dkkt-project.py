@@ -72,18 +72,18 @@ def get_all_link(link: str):
     src_link = re.findall(r'src="(.+?)"', response)
     href_link = re.findall(r'href="(.+?)"', response)
     list_crawled_link = src_link + href_link
-    print('\n[*] Web Resources:')
+    print(SUCCESS + '\n[*] Web Resources:')
     for src in list_crawled_link:
         if 'blob.core.windows.net' in src \
                 or 'file.core.windows.net' in src:
-            print(f'   [+] Web resource: {src}')
+            print(SUCCESS + f'   [+] Web resource: {src}')
             list_urls.append(src)
         else:
             tmp_link = valid_link(link, src)
-            print(f'   [+] Web resource: {tmp_link}')
+            print(SUCCESS + f'   [+] Web resource: {tmp_link}')
             list_urls.append(tmp_link)
     if not list_urls:
-        print('   [-] Web resource not found!')
+        print(FAIL + '   [-] Web resource not found!')
 
 
 def get_contact(list_links: list):
@@ -95,25 +95,25 @@ def get_contact(list_links: list):
     for link in list_links:
         try:
             if re.match(re.compile(r'.*\.(php)|(html)|(aspx)$'), link):
-                print(f'\n[*] Checking Social contact on website: {link}')
+                print(INFO + f'\n[*] Checking Social contact on website: {link}')
                 respond = session.get(link)
                 html = respond.text.replace('&#8203', '')
                 respond.close()
                 list_phone_number = re.findall(r'\d+\-\d+\-\d+', html)
                 if list_phone_number:
-                    print(f'   [!] Phone Found:')
+                    print(INFO + f'   [!] Phone Found:')
                     for phone in list_phone_number:
-                        print(f'      [+] Phone number: {phone}')
+                        print(SUCCESS + f'      [+] Phone number: {phone}')
                         list_phones.append(phone)
 
-                list_email = re.findall(r'[\w_-]+@[\w._-]+\.\w+', html)
+                list_email = re.findall(r'[\w._-]+@[\w._-]+\.\w+', html)
                 if list_email:
-                    print(f'   [!] Emails Found:')
+                    print(INFO + f'   [!] Emails Found:')
                     for email in list_email:
-                        print(f'      [+] Email: {email}')
+                        print(SUCCESS + f'      [+] Email: {email}')
                         list_emails.append(email)
                 if not list_phone_number and not list_email:
-                    print('  [-] Not found any email or phone on this file')
+                    print(FAIL + '  [-] Not found any email or phone on this file')
         except ValueError:
             pass
 
@@ -136,7 +136,7 @@ Option 5: Exit
 
     try:
         try:
-            print(option_table)
+            print(CLOSE + option_table)
             try:
                 option = int(input('>> Enter your option: '))
             except ValueError:
@@ -163,7 +163,10 @@ Option 5: Exit
                     while os.access(input_brute, os.R_OK):
                         input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
 
-                os.system(f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
+                try:
+                    os.system(f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
+                except:    
+                    os.system(f'python3 tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
                 others_output = others_output + '\n' + open('1.txt', 'r', encoding='utf8').read()
                 os.remove('1.txt')
                 return option_panel()
