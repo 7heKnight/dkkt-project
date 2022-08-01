@@ -16,9 +16,12 @@ Disclaimer
 ---
 **This project is built for education purpose. Any problem is user own risk.**
 
+Requirement
+---
+Python version 3.5 or above
+
 Installation
 ---
-
 ```sh
 pip install -r requirements.txt
 ```
@@ -26,7 +29,7 @@ pip install -r requirements.txt
 How to use
 ---
 ```sh
-python dns_scan.py
+python3 dkkt-project.py
 ```
 In here you will have option `-q` which will not show the banner. When the script activated. There is an option table, chose and give the required information from it.
 

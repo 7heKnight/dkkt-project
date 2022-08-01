@@ -137,36 +137,30 @@ Option 5: Exit
     try:
         try:
             print(CLOSE + option_table)
-            try:
-                option = int(input('>> Enter your option: '))
-            except ValueError:
-                option = int(input('>> Enter your option: '))
+            option = int(input('>> Enter your option: '))
             # ==============================================================
             if option == 1:
-                url = input('[*] Enter Url: ')
+                url = input('>> Enter Url: ')
                 get_all_link(url)
                 get_contact(list_urls)
                 return option_panel()
             # ==============================================================
             elif option == 2:
-                input_keyword = input('[*] Enter keywords: ')
-                input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
+                flag = 1
+                input_keyword = input('>> Enter keywords: ')
+                input_mutation = input('>> Enter Mutations: (default: wordlist/fuzz.txt): ')
                 if input_mutation == '':
                     input_mutation = os.getcwd() + '/wordlist/fuzz.txt'
                 if not os.access(input_mutation, os.R_OK):
                     while os.access(input_mutation, os.R_OK):
                         input_mutation = input("[*] Enter Mutations: (default: wordlist/fuzz.txt): ")
-                input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
+                input_brute = input('>> Enter Brute-list (default: wordlist/fuzz.txt): ')
                 if input_brute == '':
                     input_brute = os.getcwd() + '/wordlist/fuzz.txt'
                 if not os.access(input_brute, os.R_OK):
                     while os.access(input_brute, os.R_OK):
-                        input_brute = input("[*] Enter Brute-list (default: wordlist/fuzz.txt): ")
-
-                try:
-                    os.system(f'python tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
-                except:    
-                    os.system(f'python3 tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
+                        input_brute = input('>> Enter Brute-list (default: wordlist/fuzz.txt): ')
+                os.system(f'python3 tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
                 others_output = others_output + '\n' + open('1.txt', 'r', encoding='utf8').read()
                 os.remove('1.txt')
                 return option_panel()
@@ -174,16 +168,16 @@ Option 5: Exit
             elif option == 3:
                 counter = 0
                 lockout_counter = 0
-                input_emails = input('Input email wordlist (default wordlist/wordlist_emails.txt): ')
+                input_emails = input('>> Input email wordlist (default wordlist/wordlist_emails.txt): ')
                 if input_emails == '':
                     input_emails = os.getcwd() + '/wordlist/wordlist_emails.txt'
-                    lockout = input('[*] Input lockout time (default is 1 secs): ')
+                    lockout = input('>> Input lockout time (default is 1 secs): ')
                     if lockout == '':
                         lockout = 1
-                    timeout = input('[*] Input timeout (default is 1 secs): ')
+                    timeout = input('>> Input timeout (default is 1 secs): ')
                     if timeout == '':
                         timeout = 1
-                password = input('Input password: ')
+                password = input('>> Input password: ')
                 with open(input_emails) as input_emails:
                     for line in input_emails:
                         email_split = line.split()
@@ -218,7 +212,7 @@ Option 5: Exit
                             b = SUCCESS + "Result - " + " " * 15 + "VALID PASSWORD! [+]"
                             print(SUCCESS + f"[+] {email:44} {b}" + CLOSE)
                         if account_doesnt_exist:
-                            b = " Result - " + " " * 14 + "INVALID ACCOUNT! [-]"
+                            b = "Result - " + " " * 14 + "INVALID ACCOUNT! [-]"
                             print(FAIL + f"[-] {email:43} {b}" + CLOSE)
                         if account_disabled:
                             b = "Result - " + " " * 11 + "ACCOUNT DISABLED. [!]"
@@ -233,7 +227,7 @@ Option 5: Exit
                                 lock_time = 1
                                 lockout = int(lock_time) * 60
                             if lockout_counter == 3:
-                                print(FAIL + f'\n[WARN] Multiple lockouts detected.\n')
+                                print(FAIL + f'\n[!] Multiple lockouts detected.\n')
                                 con_proc = input(
                                     "Would you like to continue the scan after the lockout period is over? (y/n) ")
                                 if con_proc == "y" or "Y":
@@ -249,19 +243,19 @@ Option 5: Exit
                                     return option_panel()
                                 else:
                                     print(
-                                        FAIL + f"\n[warn] Invalid input. Quitting.\n")
+                                        FAIL + f"\n[!] Invalid input. Quitting.\n")
                                     return option_panel()
                         if desktopsso_response:
                             a = email
-                            b = " Result -  Desktop SSO Enabled [!]"
+                            b = "Result -  Desktop SSO Enabled [!]"
                             print(INFO + f'[!] {a:51} {b} ' + CLOSE)
                         if account_invalid_password:
                             a = email
-                            b = " Result - " + " " * 10 + "Invalid Credentials! [-]"
+                            b = "Result - " + " " * 10 + "Invalid Credentials! [-]"
                             print(FAIL + f"[-] {email:43} {b}" + CLOSE)
                         if password_expired:
                             a = email
-                            b = " Result - " + " " * 9 + "User Password Expired [!]"
+                            b = "Result - " + " " * 9 + "User Password Expired [!]"
                             print(INFO + f"[!] {email:43} {b}" + CLOSE)
                         if mfa_true:
                             counter = counter + 1
@@ -300,27 +294,27 @@ Option 5: Exit
             # ==============================================================
             elif option == 4:
                 if not list_urls and not others_output and not list_emails and not list_phones:
-                    print('[-] There is no data to print output')
+                    print(FAIL + '[-] There is no data to print output')
                     sleep(3)
                     system('cls')
                 else:
+                    print(SUCCESS + '[+] File out in ../dkkt-project/export')
                     export.main(list_urls, list_phones, list_emails, others_output)
                 return option_panel()
 
             # ==============================================================
             elif option == 5:
-                print('-----------------------------\n[-] Exit the program!')
+                print('-----------------------------\n' + INFO + '[-] Exit the program!')
                 exit(0x0)
             else:
-                print('[-] Wrong option!')
-                sleep(3)
-                system('cls')
+                print(FAIL + '[-] Wrong option!' + CLOSE)
+                sleep(1)
                 return option_panel()
         except IOError:
             print('[!] Error when processing\n\n')
             return option_panel()
     except KeyboardInterrupt:
-        print('\n-----------------------------\n[!] Keyboard Interruption.')
+        print('\n-----------------------------\n' + FAIL + '[!] Keyboard Interruption.')
         exit(0x1)
 
 
