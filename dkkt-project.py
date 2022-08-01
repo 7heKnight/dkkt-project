@@ -216,7 +216,7 @@ Option 5: Exit
                                 print(FAIL + f'\n[!] Multiple lockouts detected.\n')
                                 con_proc = input(
                                     "Would you like to continue the scan after the lockout period is over? (y/n) ")
-                                if con_proc == "y" or "Y":
+                                if 'y' == con_proc.lower()[0]:
                                     print(
                                         INFO + f"Waiting {lockout} seconds before continuing.")
                                     lockout = lockout - 30
@@ -224,7 +224,7 @@ Option 5: Exit
                                     print(INFO + f'\nContinuing scan in 30 seconds.')
                                     sleep(int(30))
                                     lockout_counter = 0
-                                elif con_proc == "n" or "N":
+                                elif 'n' == con_proc.lower()[0]:
                                     print(INFO + "Quitting.")
                                     return option_panel()
                                 else:
