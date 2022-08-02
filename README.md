@@ -22,7 +22,7 @@ Requirement
 - Python version 3.5 or above (working well on Python3.10)
 - python3-pip
 - jq
-- azure-cli version 2.34.1
+- azure-cli version 2.32 or above
 Installation
 ---
 ```sh
