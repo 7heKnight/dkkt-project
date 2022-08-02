@@ -64,6 +64,6 @@ Option 5: Exit
 ```
 ---
 Thanks
-cloud_enum - https://github.com/initstring/cloud_enum
-Oh365UserFinder - https://github.com/dievus/Oh365UserFinder
-cs-suite - https://github.com/SecurityFTW/cs-suite
+- cloud_enum - https://github.com/initstring/cloud_enum
+- Oh365UserFinder - https://github.com/dievus/Oh365UserFinder
+- cs-suite - https://github.com/SecurityFTW/cs-suite
