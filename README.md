@@ -62,7 +62,7 @@ Option 2: DNS Scanning
 Option 3: Data extracting (web application)
 Option 4: Password spraying
 Option 5: Overall pentesting
-Option 5: Exit
+Option 6: Exit
 
 >> Enter your option: 
 ```
