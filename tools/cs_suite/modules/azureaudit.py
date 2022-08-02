@@ -2027,7 +2027,7 @@ def persistent(latest, last):
 
 
 def persistent_files():
-    dirs = os.listdir("./reports/AZURE/%s/" % (account_name))
+    dirs = os.path.realpath('./reports/AZURE/%s/' % (account_name))
     if len(dirs) == 1:
         print("This is the first audit run for the account, diff will be shown in the next run")
         with open("./reports/AZURE/%s/%s/diff.html" % (account_name, timestmp), 'w') as f:
@@ -2037,9 +2037,9 @@ def persistent_files():
         blast_dir = subprocess.check_output(
             ["ls -td -- */ | head -n 2 | cut -d'/' -f1 | sed -n 2p"], cwd='./reports/AZURE/%s' % (account_name), shell=True).strip()
         last_dir = utils.bytes_to_str_noquotes(blast_dir)
-        latest = "./reports/AZURE/%s/%s/final_report/final.json" % (
+        latest = "reports/AZURE/%s/%s/final_report/final.json" % (
             account_name, timestmp)
-        last = "./reports/AZURE/%s/%s/final_report/final.json" % (
+        last = "reports/AZURE/%s/%s/final_report/final.json" % (
             account_name, last_dir)
         persistent(latest, last)
         json_to_html('./reports/AZURE/%s/%s/final_diff.json' % (account_name, timestmp),
