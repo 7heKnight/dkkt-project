@@ -380,7 +380,7 @@ def storage_encyption():
 
 
 def jit_network_access():
-    print("2.12: Checking if JIT Network Access is set to ON\n\n")
+    print("2.12: Checking if Just-in-Time Network Access is set to ON\n\n")
     jit_net_access = subprocess.check_output(
         ['az account get-access-token --query "{subscripton:subscription,accessToken:accessToken}" --out tsv | xargs -L1 bash -c \'curl -s -X GET -H "Authorization: Bearer $1" -H "Content-Type: application/json" https://management.azure.com/subscriptions/$0/providers/microsoft.Security/policies?api-version=2015-06-01-preview\' | jq \'.|.value[] | select(.name=="default")\'|jq \'.properties.recommendations.jitNetworkAccess\' | tr -d \'"\''], shell=True).strip()
     result = {}
@@ -2037,10 +2037,8 @@ def persistent_files():
         blast_dir = subprocess.check_output(
             ["ls -td -- */ | head -n 2 | cut -d'/' -f1 | sed -n 2p"], cwd='./reports/AZURE/%s' % (account_name), shell=True).strip()
         last_dir = utils.bytes_to_str_noquotes(blast_dir)
-        latest = "reports/AZURE/%s/%s/final_report/final.json" % (
-            account_name, timestmp)
-        last = "reports/AZURE/%s/%s/final_report/final.json" % (
-            account_name, last_dir)
+        latest = "./reports/AZURE/%s/%s/final_report/final.json" % (account_name, timestmp)
+        last = os.path.realpath('./reports/AZURE/%s/%s/final_report/final.json') % (account_name, timestmp)
         persistent(latest, last)
         json_to_html('./reports/AZURE/%s/%s/final_diff.json' % (account_name, timestmp),
                      './reports/AZURE/%s/%s/diff.html' % (account_name, timestmp))

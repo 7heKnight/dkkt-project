@@ -1,0 +1,12 @@
+{"check": "LOG_PPOFILE", "data": [{"check_no": "5.1", "level": "INFO", "score": "Scored", "region": "null", "category": "management", "type": "PASS", "data": "There is LOG PROFILE which exists"}]}
+{"check": "LOG_RETENTION_POLICY", "data": [{"check_no": "5.2", "level": "INFO", "score": "Scored", "region": "null", "category": "management", "type": "INFO", "data": "The LOG RETENTION policy not found"}]}
+{"check": "CREATE_POLICY_ASSIGNMENT", "data": []}
+{"check": "CREATE_NETWORK_GROUP", "data": []}
+{"check": "DELETE_NETWORK_GROUP", "data": []}
+{"check": "CREATE_NETWORK_RULES", "data": []}
+{"check": "DELETE_NETWORK_RULES", "data": []}
+{"check": "CREATE_SECURITY_SOLUTION", "data": []}
+{"check": "DELETE_SECURITY_SOLUTION", "data": []}
+{"check": "CREATE_SQL_FIREWALL_RULE", "data": []}
+{"check": "DELETE_SQL_FIREWALL_RULE", "data": []}
+{"check": "UPDATE_SECURITY_POLICY", "data": []}

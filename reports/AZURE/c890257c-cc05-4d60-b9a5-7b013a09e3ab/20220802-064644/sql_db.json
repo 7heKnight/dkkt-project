@@ -1,0 +1,8 @@
+{"check": "SQL_DB_AUDIT", "data": [{"check_no": "4.2.1", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_THREAT_DETECTION", "data": [{"check_no": "4.2.2", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_DISABLED_ALERT", "data": [{"check_no": "4.2.3", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_EMAIL_ALERT", "data": [{"check_no": "4.2.4", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_EMAIL_ADMIN", "data": [{"check_no": "4.2.5", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_DATA_ENCRYPTION", "data": [{"check_no": "4.2.6", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_AUDIT_RETENTION", "data": [{"check_no": "4.2.7", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
+{"check": "SQL_DB_THREAT_RETENTION", "data": [{"check_no": "4.2.8", "level": "INFO", "score": "Scored", "region": "null", "type": "PASS", "category": "database", "data": "No SQL servers/DB to AUDIT"}]}
