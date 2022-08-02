@@ -19,13 +19,17 @@ Disclaimer
 Requirement
 ---
 - Operating System OSX or Linux only
-- Python version 3.5 or above
+- Python version 3.5 or above (working well on Python3.10)
+- python3-pip
 - jq
-
+- azure-cli version 2.34.1
 Installation
 ---
 ```sh
+sudo apt-get install jq
+sudo apt-get install python3-pip
 pip install -r requirements.txt
+sudo apt-get install azure-cli=2.34.1-1~buster (Kali Distribution)
 ```
 
 How to use
