@@ -2,3 +2,7 @@ dnspython
 requests
 requests_futures
 colorama==0.4.4
+python-dateutil==2.6.1
+python-json-logger
+pymongo
+rm==2020.12.3

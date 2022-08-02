@@ -125,9 +125,10 @@ def option_panel():
     option_table = '''
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
-Option 3: Password spraying
-Option 4: Extract data (HTML/TXT)
-Option 5: Exit
+Option 3: Data extracting (web application)
+Option 4: Password spraying
+Option 5: Overall pentesting
+Option 6: Exit
 '''
     from time import sleep
     from os import system
@@ -144,7 +145,6 @@ Option 5: Exit
                 return option_panel()
             # ==============================================================
             elif option == 2:
-                flag = 1
                 input_keyword = input('>> Enter keywords: ')
                 input_mutation = input('>> Enter Mutations: (default: wordlist/fuzz.txt): ')
                 if input_mutation == '':
@@ -161,9 +161,19 @@ Option 5: Exit
                 os.system(f'python3 tools/cloud_enum.py -k {input_keyword} -b {input_brute} -m {input_mutation} -l 1.txt -t 10')
                 others_output = others_output + '\n' + open('1.txt', 'r', encoding='utf8').read()
                 os.remove('1.txt')
+                return option_panel()            
+                # ==============================================================
+            elif option == 3:
+                if not list_urls and not others_output and not list_emails and not list_phones:
+                    print(FAIL + '[-] There is no data to print output')
+                    sleep(3)
+                    system('cls')
+                else:
+                    print(SUCCESS + '[+] File out in ../dkkt-project/export')
+                    export.main(list_urls, list_phones, list_emails, others_output)
                 return option_panel()
             # ==============================================================
-            elif option == 3:
+            elif option == 4:
                 counter = 0
                 lockout_counter = 0
                 input_emails = input('>> Input email wordlist (default wordlist/wordlist_emails.txt): ')
@@ -272,19 +282,13 @@ Option 5: Exit
                         print(
                             INFO + f'[info] Scan completed at {time.ctime()}' + CLOSE)
                 return option_panel()
-            # ==============================================================
-            elif option == 4:
-                if not list_urls and not others_output and not list_emails and not list_phones:
-                    print(FAIL + '[-] There is no data to print output')
-                    sleep(3)
-                    system('cls')
-                else:
-                    print(SUCCESS + '[+] File out in ../dkkt-project/export')
-                    export.main(list_urls, list_phones, list_emails, others_output)
-                return option_panel()
-
-            # ==============================================================
+	    # ==============================================================
             elif option == 5:
+            	os.system(f'python3 tools/cs_suite/cs.py -env azure')
+            	return option_panel()
+            
+            # ==============================================================
+            elif option == 6:
                 print('-----------------------------\n' + INFO + '[-] Exit the program!')
                 exit(0x0)
             else:

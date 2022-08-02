@@ -1,16 +1,16 @@
-DKKT-Project
+dkkt-project
 ---
 
 This project built for Capstone Project in FPT University.
-This Project built for azure scanning purpose.
+This Project built for Cloud pentesting (Azure specificed) purpose.
 
 What will this tool do?
 ---
 Active scanning on that web site to get all resource like (links, phones, emails)
-
-Using [Cloud Enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
-
-Export to html or txt
+Using [cloud_enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
+Data exfilltrating of the web application
+Using [Oh365UserFinder](https://github.com/dievus/Oh365UserFinder) for password spraying O365User
+Using [cs_suite](https://github.com/SecurityFTW/cs_suite) (maintained) to overall pentesting Azure resource
 
 Disclaimer
 ---
@@ -18,7 +18,9 @@ Disclaimer
 
 Requirement
 ---
-Python version 3.5 or above
+- Operating System OSX or Linux only
+- Python version 3.5 or above
+- jq
 
 Installation
 ---
@@ -53,10 +55,15 @@ problem will be your own risk.
 
 Option 1: Reconnaissance the targeted website
 Option 2: DNS Scanning
-Option 3: Password spraying
-Option 4: Extract data (HTML/TXT)
+Option 3: Data extracting (web application)
+Option 4: Password spraying
+Option 5: Overall pentesting
 Option 5: Exit
 
 >> Enter your option: 
 ```
-
+---
+Thanks
+cloud_enum - https://github.com/initstring/cloud_enum
+Oh365UserFinder - https://github.com/dievus/Oh365UserFinder
+cs-suite - https://github.com/SecurityFTW/cs-suite
