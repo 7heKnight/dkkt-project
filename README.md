@@ -6,11 +6,11 @@ This Project built for Cloud pentesting (Azure specificed) purpose.
 
 What will this tool do?
 ---
-Active scanning on that web site to get all resource like (links, phones, emails)
-Using [cloud_enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
-Data exfilltrating of the web application
-Using [Oh365UserFinder](https://github.com/dievus/Oh365UserFinder) for password spraying O365User
-Using [cs_suite](https://github.com/SecurityFTW/cs_suite) (maintained) to overall pentesting Azure resource
+- Active scanning on that web site to get all resource like (links, phones, emails)
+- Using [cloud_enum](https://github.com/initstring/cloud_enum) (optimized) to brute force other resource (thread = 10)
+- Data exfilltrating of the web application
+- Using [Oh365UserFinder](https://github.com/dievus/Oh365UserFinder) for password spraying O365User
+- Using [cs_suite](https://github.com/SecurityFTW/cs_suite) (maintained) to overall pentesting Azure resource
 
 Disclaimer
 ---
