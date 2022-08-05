@@ -2,7 +2,8 @@ dkkt-project
 ---
 
 This project built for Capstone Project in FPT University.
-This Project built for Cloud pentesting (Azure specificed) purpose.
+
+This Project was built for Cloud pentesting (Azure specificed) purpose.
 
 What will this tool do?
 ---
