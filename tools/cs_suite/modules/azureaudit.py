@@ -380,7 +380,7 @@ def storage_encyption():
 
 
 def jit_network_access():
-    print("2.12: Checking if Just-in-Time Network Access is set to ON\n\n")
+    print("2.12: Checking if JIT Network Access is set to ON\n\n")
     jit_net_access = subprocess.check_output(
         ['az account get-access-token --query "{subscripton:subscription,accessToken:accessToken}" --out tsv | xargs -L1 bash -c \'curl -s -X GET -H "Authorization: Bearer $1" -H "Content-Type: application/json" https://management.azure.com/subscriptions/$0/providers/microsoft.Security/policies?api-version=2015-06-01-preview\' | jq \'.|.value[] | select(.name=="default")\'|jq \'.properties.recommendations.jitNetworkAccess\' | tr -d \'"\''], shell=True).strip()
     result = {}
@@ -627,15 +627,15 @@ def secure_transfer():
     result['check'] = 'SECURE TRANSFER STORAGE ACCOUNT'
     data = []
     for line in https_enabled.splitlines():
-        bwords = line.split()
-        words = utils.byteslist_to_strlist(bwords)
+        words = line.split()
+        words = utils.byteslist_to_strlist(words)
         j_res = {}
         j_res['check_no'] = '3.1'
         j_res['level'] = 'INFO'
         j_res['score'] = 'Scored'
         j_res['category'] = 'storage'
         j_res['region'] = words[2]
-        if words[1] == 'False':
+        if words[1] == 'False'.encode('utf-8'):
             j_res['type'] = 'WARNING'
             j_res['value'] = 'The storage account %s does not have HTTPS only traffic enabled' % words[0]
         else:
@@ -2027,7 +2027,7 @@ def persistent(latest, last):
 
 
 def persistent_files():
-    dirs = os.path.realpath('./reports/AZURE/%s/' % (account_name))
+    dirs = os.listdir("./reports/AZURE/%s/" % (account_name))
     if len(dirs) == 1:
         print("This is the first audit run for the account, diff will be shown in the next run")
         with open("./reports/AZURE/%s/%s/diff.html" % (account_name, timestmp), 'w') as f:
@@ -2037,8 +2037,10 @@ def persistent_files():
         blast_dir = subprocess.check_output(
             ["ls -td -- */ | head -n 2 | cut -d'/' -f1 | sed -n 2p"], cwd='./reports/AZURE/%s' % (account_name), shell=True).strip()
         last_dir = utils.bytes_to_str_noquotes(blast_dir)
-        latest = "./reports/AZURE/%s/%s/final_report/final.json" % (account_name, timestmp)
-        last = os.path.realpath('./reports/AZURE/%s/%s/final_report/final.json') % (account_name, timestmp)
+        latest = "./reports/AZURE/%s/%s/final_report/final.json" % (
+            account_name, timestmp)
+        last = "./reports/AZURE/%s/%s/final_report/final.json" % (
+            account_name, last_dir)
         persistent(latest, last)
         json_to_html('./reports/AZURE/%s/%s/final_diff.json' % (account_name, timestmp),
                      './reports/AZURE/%s/%s/diff.html' % (account_name, timestmp))
